@@ -1,0 +1,640 @@
+/* Basic Reset & Body Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1a1a1a; /* Dark background */
+    color: #f0f0f0;
+    line-height: 1.6;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    min-height: 100vh; /* Ensure footer can stick to bottom if content is short */
+    display: flex; /* Added for potential sticky footer pattern */
+    flex-direction: column; /* Added for potential sticky footer pattern */
+}
+
+/* --- Preloader (Keep As Is) --- */
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 2s ease-in-out, visibility 2s ease-in-out;
+    pointer-events: auto;
+}
+
+.preloader-content {
+    text-align: center;
+    opacity: 0;
+    animation: fadeInContent 1.5s ease-out 0.5s forwards;
+}
+
+.preloader-title {
+    font-size: 3rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+    letter-spacing: 2px;
+    animation: scaleUpText 1s ease-in-out 0.5s forwards;
+}
+
+.preloader p {
+    font-size: 1.2rem;
+    color: #aaa;
+}
+
+.preloader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+@keyframes fadeInContent { to { opacity: 1; } }
+@keyframes scaleUpText {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* --- Main Content Visibility --- */
+.main-content {
+    opacity: 0;
+    transition: opacity 0.8s ease-in 0.2s;
+    flex-grow: 1; /* Added for sticky footer pattern */
+}
+
+body.loaded .main-content {
+    opacity: 1;
+}
+
+/* --- Header & Navigation (Keep As Is) --- */
+header {
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 1rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    padding: 0 1rem; /* Add horizontal padding */
+}
+
+.nav-link {
+    color: #ccc;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    font-size: 1.1rem;
+    position: relative;
+    transition: color 0.3s ease, transform 0.3s ease;
+    letter-spacing: 1px;
+    white-space: nowrap; /* Prevent links breaking mid-word */
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: #00bcd4;
+    transition: width 0.4s ease;
+}
+
+.nav-link:hover {
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+.nav-link.active {
+    color: #00bcd4;
+    font-weight: bold;
+}
+
+
+/* --- Main Content & Page Section Handling --- */
+main {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto 2rem auto; /* Center the content, remove top margin as header is sticky */
+}
+
+/* HIDE ALL SECTIONS BY DEFAULT */
+.page-section {
+    display: none;
+    opacity: 0;
+    animation: pageFadeIn 0.6s ease forwards;
+}
+
+/* SHOW ACTIVE SECTION */
+.page-section.active {
+    display: block; /* Or 'flex', 'grid' if needed by default */
+    opacity: 1;
+}
+
+/* Gallery Heading Styles (Applies within any .page-section that also has .gallery class) */
+.gallery h2,
+#about h2,
+#contact h2 { /* Apply similar styling to other page headings */
+    text-align: center;
+    font-size: 2.5rem;
+    margin-top: 1rem; /* Add some space from nav */
+    margin-bottom: 2.5rem;
+    color: #e0e0e0;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    border-bottom: 2px solid #00bcd4;
+    display: inline-block;
+    padding-bottom: 0.5rem;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Simple Fade-in animation for pages */
+@keyframes pageFadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* --- Home Page Specific Styles --- */
+
+/* 1. Hero Section */
+.hero-section {
+    background: url('img/hero.jpeg') no-repeat center center/cover;
+    /* Fallback solid color if image fails */
+    background-color: #333;
+    min-height: 60vh; /* Adjust height as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #fff;
+    position: relative; /* For pseudo-element overlay */
+    border-radius: 8px;
+    overflow: hidden; /* Ensures overlay stays within bounds */
+}
+
+/* Optional: Dark overlay for better text readability */
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Adjust opacity (last value) */
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative; /* Ensure text is above the overlay */
+    z-index: 2;
+    max-width: 800px;
+}
+
+.hero-content h1 {
+    font-size: 3rem; /* Adjust as needed */
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.7);
+}
+
+.hero-content p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto; /* Center paragraph if max-width is applied */
+    text-shadow: 1px 1px 6px rgba(0,0,0,0.6);
+}
+
+/* 2. About Section on Home Page */
+.about-section-home {
+    padding: 3rem 1rem;
+    background-color: rgba(255, 255, 255, 0.05); /* Slightly lighter background section */
+    margin-top: 3rem;
+    border-radius: 8px;
+}
+
+.about-section-home h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: #e0e0e0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.about-content {
+    display: flex; /* Arrange text and cards */
+    flex-wrap: wrap; /* Allow stacking on smaller screens */
+    gap: 2rem;
+}
+
+.about-text {
+    flex: 1; /* Take available space */
+    min-width: 280px; /* Ensure text area doesn't get too squished */
+}
+
+.about-text p {
+    margin-bottom: 1rem;
+    color: #ccc;
+}
+
+/* 3. Service Cards Section on Home Page */
+.service-cards-container {
+     flex: 1; /* Take available space */
+     min-width: 300px; /* Prevent squishing */
+}
+
+.service-cards-container h3 {
+     text-align: center;
+     font-size: 1.5rem;
+     margin-bottom: 1.5rem;
+     color: #00bcd4; /* Accent color */
+}
+
+.service-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive cards */
+    gap: 1.5rem;
+}
+
+.card {
+    background-color: #2a2a2a; /* Darker card background */
+    padding: 1.5rem 1rem;
+    text-align: center;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.5);
+}
+
+.card-icon {
+    color: #00bcd4; /* Accent color for icons */
+    margin-bottom: 1rem;
+}
+
+.card h4 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.card p {
+    font-size: 0.9rem;
+    color: #aaa;
+}
+
+/* --- About Page Specific Styles --- */
+#about.page-section {
+    padding: 2rem 1rem;
+    max-width: 900px; /* Constrain width for readability */
+    margin: 0 auto;
+}
+
+.about-full-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content vertically */
+    text-align: center; /* Center text */
+}
+
+.about-profile-pic {
+    width: 150px; /* Adjust size */
+    height: 150px;
+    border-radius: 50%; /* Make it round */
+    object-fit: cover; /* Ensure image covers area */
+    margin-bottom: 1.5rem;
+    border: 4px solid #00bcd4; /* Optional accent border */
+}
+
+.about-full-content p {
+    margin-bottom: 1rem;
+    color: #ccc;
+    max-width: 700px; /* Limit text width */
+    line-height: 1.7;
+}
+
+
+/* --- Contact Page Specific Styles --- */
+#contact.page-section {
+    padding: 2rem 1rem;
+    max-width: 800px; /* Constrain width */
+    margin: 0 auto;
+    text-align: center; /* Center content */
+}
+
+.contact-details-page p {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    color: #ccc;
+}
+
+.contact-details-page i {
+    color: #00bcd4; /* Accent color */
+    margin-right: 10px;
+    width: 20px; /* Align icons */
+    text-align: center;
+}
+
+.contact-details-page a {
+    color: #ADD8E6; /* Lighter blue for links */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.contact-details-page a:hover {
+    color: #00bcd4; /* Accent color on hover */
+    text-decoration: underline;
+}
+
+
+/* --- Gallery Grid (Keep As Is) --- */
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+.gallery-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+                box-shadow 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+                filter 0.4s ease;
+    will-change: transform, box-shadow;
+}
+
+.gallery-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.6);
+    filter: brightness(1.1);
+}
+
+/* --- NEW Camera Shutter Effect (Keep As Is) --- */
+.shutter {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2000;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.1s ease, visibility 0.1s ease;
+    background: transparent;
+}
+
+.shutter.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+.flap {
+    --p: calc(var(--i) / var(--flaps));
+    width: 150vmax;
+    height: 150vmax;
+    position: absolute;
+    bottom: 50%;
+    right: 50%;
+    pointer-events: none;
+    will-change: transform;
+    background: linear-gradient(35deg, #333, #222);
+    border: solid 4px #999;
+    transform-origin: bottom right;
+    transform: rotate(-0.5turn) rotate(calc(1turn * var(--p))) skewX(30deg) translateX(-100%) translateY(90%);
+    animation: none;
+}
+
+.shutter.active .flap {
+    animation: click 1.5s cubic-bezier(0.5, 0, 0.5, 1) 0.2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes click {
+    48%, 52% {
+        transform: rotate(-0.25turn) rotate(calc(1turn * var(--p))) skewX(30deg) translateX(-0.5%) translateY(-0.5%);
+    }
+}
+
+
+/* --- Lightbox (Keep As Is, ensure z-index) --- */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 3000; /* Highest */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+    padding: 20px;
+    cursor: zoom-out;
+}
+
+.lightbox.visible {
+    opacity: 1;
+    visibility: visible;
+}
+
+.lightbox-content {
+    display: block;
+    max-width: 90%;
+    max-height: 90vh;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.4s ease;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+    border-radius: 5px;
+    cursor: default;
+}
+
+.lightbox.visible .lightbox-content {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    color: #fff;
+    font-size: 3rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+    line-height: 1;
+}
+
+.lightbox-close:hover {
+    color: #00bcd4;
+    transform: rotate(90deg) scale(1.1);
+}
+
+
+/* --- UPDATED Footer --- */
+footer {
+    padding: 2rem 1rem; /* Increased padding */
+    margin-top: 3rem; /* Keep space from content */
+    background-color: #111; /* Very dark background */
+    color: #aaa; /* Slightly lighter text */
+    font-size: 0.9rem;
+    border-top: 1px solid #333; /* Subtle top border */
+}
+
+.footer-content {
+    max-width: 1100px;
+    margin: 0 auto; /* Center content */
+    display: grid; /* Use grid for layout */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Responsive columns */
+    gap: 2rem; /* Space between columns */
+    text-align: left; /* Align text left within columns */
+}
+
+.footer-contact h3,
+.footer-socials h3 {
+    color: #fff; /* White headings */
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    border-bottom: 1px solid #444; /* Subtle underline */
+    padding-bottom: 0.5rem;
+}
+
+.footer-contact p {
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+}
+
+.footer-contact .icon { /* Styling for icons in contact */
+    color: #00bcd4; /* Accent color */
+    margin-right: 10px;
+    width: 20px; /* Consistent width */
+    text-align: center;
+}
+
+.footer-contact a,
+.footer-copy a {
+    color: #ccc; /* Light grey links */
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-contact a:hover,
+.footer-copy a:hover {
+    color: #00bcd4; /* Accent on hover */
+    text-decoration: underline;
+}
+
+.social-links {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping if needed */
+    gap: 1rem; /* Space between icons */
+}
+
+.social-link {
+    color: #ccc; /* Default icon color */
+    font-size: 1.6rem; /* Larger icons */
+    transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-link:hover {
+    transform: scale(1.2); /* Grow on hover */
+    /* Brand colors on hover */
+}
+.social-link.facebook:hover { color: #3b5998; }
+.social-link.instagram:hover { color: #E1306C; } /* Gradient: use primary color */
+.social-link.twitter:hover { color: #1DA1F2; }
+.social-link.linkedin:hover { color: #0077B5; }
+/* Add other brand hover colors if needed */
+
+.footer-copy {
+    grid-column: 1 / -1; /* Span full width */
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #333; /* Separator line */
+    font-size: 0.85rem;
+    color: #888; /* Dimmer text for copyright */
+}
+
+/* --- Responsiveness (Keep As Is, adjust if needed) --- */
+
+@media (max-width: 768px) {
+    .nav-link { font-size: 1rem; padding: 0.5rem 0.8rem; }
+    nav { gap: 1rem; } /* Reduce nav gap */
+    .hero-content h1 { font-size: 2.5rem; }
+    .hero-content p { font-size: 1.1rem; }
+    .about-content { flex-direction: column; } /* Stack about text/cards */
+    .footer-content { grid-template-columns: 1fr; text-align: center;} /* Stack footer columns */
+    .social-links { justify-content: center; } /* Center social links */
+}
+
+@media (max-width: 480px) {
+    nav { gap: 0.5rem; }
+    .nav-link { font-size: 0.9rem; padding: 0.5rem 0.5rem;}
+    .hero-content h1 { font-size: 2rem; }
+    .hero-content p { font-size: 1rem; }
+    main { padding: 1rem; } /* Reduce main padding */
+    .gallery h2, #about h2, #contact h2 { font-size: 2rem; margin-bottom: 2rem; }
+    .service-cards { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 1rem;}
+    .card { padding: 1rem 0.8rem;}
+    .social-link { font-size: 1.4rem; }
+    .footer-content { gap: 1.5rem;}
+    .footer-copy { margin-top: 1rem; padding-top: 1rem;}
+}
+
+/* Responsive Gallery Grid Adjustments (Keep As Is) */
+@media (min-width: 480px) and (max-width: 768px) {
+    .gallery-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 479px) {
+    .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
