@@ -451,7 +451,7 @@ body.no-scroll {
 
 @keyframes click {
     48%, 52% {
-        transform: rotate(-0.25turn) rotate(calc(1turn * var(--p))) skewX(30deg) translateX(-0.5%) translateY(-0.5%);
+        transform: rotate(-0.25turn) rotate(calc(1turn * var(--p))) skewX(30deg) translateX(0%) translateY(0%);
     }
 }
 
