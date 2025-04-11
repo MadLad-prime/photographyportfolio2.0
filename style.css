@@ -624,6 +624,10 @@ footer {
     .social-link { font-size: 1.4rem; }
     .footer-content { gap: 1.5rem;}
     .footer-copy { margin-top: 1rem; padding-top: 1rem;}
+    .gallery-image {
+        max-height: 200px;
+        object-fit: cover;
+    }
 }
 
 /* Responsive Gallery Grid Adjustments (Keep As Is) */
