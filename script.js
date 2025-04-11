@@ -206,7 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'img/hero.jpeg',
         'img/landscapes/l5.jpg',
         'img/landscapes/l3.jpg',
-        'img/sport/s3.jpg',
+        'img/sport/s5.jpg',
         'img/wildlife/w2.jpg'
     ];
     let currentHeroIndex = 0;
