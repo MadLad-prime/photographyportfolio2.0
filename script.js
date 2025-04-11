@@ -206,8 +206,8 @@ document.addEventListener('DOMContentLoaded', () => {
         'img/hero.jpeg',
         'img/landscapes/l5.jpg',
         'img/landscapes/l3.jpg',
-        'img/sport/s5.jpg',
-        'img/wildlife/w2.jpg'
+        'img/landscapes/l2.jpg',
+        'img/wildlife/w5.jpg'
     ];
     let currentHeroIndex = 0;
     if (heroSection) {
