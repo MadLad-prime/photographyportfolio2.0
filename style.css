@@ -16,7 +16,7 @@ body {
     flex-direction: column; /* Added for potential sticky footer pattern */
 }
 
-/* --- Preloader (Keep As Is) --- */
+/* --- Preloader (modified to remove fade out but keep fade in) --- */
 .preloader {
     position: fixed;
     top: 0;
@@ -30,7 +30,7 @@ body {
     z-index: 10000;
     opacity: 1;
     visibility: visible;
-    transition: opacity 4s ease-in-out, visibility 4s ease-in-out;
+    transition: none; /* no fade-out; abrupt cut on hide */
     pointer-events: auto;
 }
 
@@ -215,6 +215,15 @@ main {
     position: relative; /* Ensure text is above the overlay */
     z-index: 2;
     max-width: 800px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1.5s ease-out, transform 1.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+    transition-delay: 0.3s;
+}
+
+body.loaded .hero-content {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .hero-content h1 {
